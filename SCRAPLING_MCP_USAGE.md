@@ -4,7 +4,8 @@
 
 The Scrapling MCP Server provides web scraping capabilities via a JSON-RPC 2.0 API hosted on Railway. It wraps the [Scrapling](https://github.com/D4Vinci/Scrapling) Python library and exposes 10 MCP tools for scraping websites with varying levels of protection.
 
-**Live Endpoint:** `https://scrapling-mcp-production.up.railway.app/mcp`
+**Production Endpoint:** `https://crawl.callteksupport.net/mcp`
+**Railway Endpoint:** `https://scrapling-mcp-production.up.railway.app/mcp`
 
 ## Authentication
 
@@ -244,19 +245,19 @@ Sessions are automatically cleaned up when idle to prevent resource exhaustion.
 
 ### Liveness Probe
 ```bash
-GET https://scrapling-mcp-production.up.railway.app/health/live
+GET https://crawl.callteksupport.net/health/live
 ```
 Returns 200 if the service is running.
 
 ### Readiness Probe
 ```bash
-GET https://scrapling-mcp-production.up.railway.app/health/ready
+GET https://crawl.callteksupport.net/health/ready
 ```
 Verifies Playwright/Chromium is available.
 
 ### Full Health Status
 ```bash
-GET https://scrapling-mcp-production.up.railway.app/health
+GET https://crawl.callteksupport.net/health
 ```
 Returns uptime, active sessions, and tool count.
 
@@ -315,13 +316,13 @@ All MCP responses follow JSON-RPC 2.0:
 
 ```bash
 # List available tools
-curl -X POST https://scrapling-mcp-production.up.railway.app/mcp \
+curl -X POST https://crawl.callteksupport.net/mcp \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer yHNTJbvhAVhEU1I75IIfUb0RpKWB1vJDoOrCYtOzujw" \
   -d '{"jsonrpc":"2.0","method":"tools/list","id":1}'
 
 # Scrape a page
-curl -X POST https://scrapling-mcp-production.up.railway.app/mcp \
+curl -X POST https://crawl.callteksupport.net/mcp \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer yHNTJbvhAVhEU1I75IIfUb0RpKWB1vJDoOrCYtOzujw" \
   -d '{
@@ -343,7 +344,7 @@ curl -X POST https://scrapling-mcp-production.up.railway.app/mcp \
 ```python
 import requests
 
-MCP_URL = "https://scrapling-mcp-production.up.railway.app/mcp"
+MCP_URL = "https://crawl.callteksupport.net/mcp"
 API_KEY = "yHNTJbvhAVhEU1I75IIfUb0RpKWB1vJDoOrCYtOzujw"
 
 headers = {
@@ -378,7 +379,7 @@ else:
 ### JavaScript/Node.js
 
 ```javascript
-const MCP_URL = "https://scrapling-mcp-production.up.railway.app/mcp";
+const MCP_URL = "https://crawl.callteksupport.net/mcp";
 const API_KEY = "yHNTJbvhAVhEU1I75IIfUb0RpKWB1vJDoOrCYtOzujw";
 
 async function scrapePage(url) {
@@ -470,7 +471,8 @@ Environment variables (set in Railway):
 - **Platform:** Railway (US West region)
 - **Project ID:** `b1a056a9-aff8-4ae8-b129-4464f701d446`
 - **Service ID:** `0d2541dc-ed80-4037-a0ce-483e5ee55874`
-- **Domain:** `scrapling-mcp-production.up.railway.app`
+- **Custom Domain:** `crawl.callteksupport.net` (via Cloudflare CNAME)
+- **Railway Domain:** `scrapling-mcp-production.up.railway.app`
 - **Auto-deploy:** Enabled on pushes to `main` branch
 - **GitHub:** `donshults/Scrapling`
 
@@ -522,7 +524,7 @@ curl -s -X POST https://backboard.railway.app/graphql/v2 \
 Check that the `Authorization` header includes `Bearer` prefix and correct API key.
 
 ### 404 Not Found
-The service may be down. Check health endpoint: `GET https://scrapling-mcp-production.up.railway.app/health/live`
+The service may be down. Check health endpoint: `GET https://crawl.callteksupport.net/health/live`
 
 ### Timeout on `fetch`/`stealthy_fetch`
 Browser-based fetchers are slower than `get`. Increase client timeout or use `get` if the site doesn't require JavaScript rendering.
